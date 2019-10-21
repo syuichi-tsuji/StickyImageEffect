@@ -39,6 +39,7 @@ function GLManager(data) {
   this.loopRaf = null;
   this.loop = this.loop.bind(this);
 }
+
 GLManager.prototype.getViewSize = function () {
   const fovInRadians = (this.camera.fov * Math.PI) / 180;
   const viewSize = Math.abs(
@@ -109,6 +110,7 @@ GLManager.prototype.createPlane = function () {
     //three.jsの組み込みuniform/attributeの紹介
     //https://qiita.com/gam0022/items/1fe17e93f0cd0432a8b0
 
+    // shaders.jsで設定したuniformのプロパティに値を設定していく
     uniforms: {
       u_texture: {
         type: "t",

@@ -20,9 +20,9 @@ void main(){
     // vec2 flipedUV = vec2(vUv.x,1.-vUv.y);
 
     vec2 normalizedRgbPos = u_rgbPosition / u_resolution;
-    normalizedRgbPos.y = 1. - normalizedRgbPos.y; 
+    normalizedRgbPos.y = 1. - normalizedRgbPos.y;
 
-    
+
     vec2 vel = u_rgbVelocity;
     float dist = distance(normalizedRgbPos + vel / u_resolution, vUv.xy);
 
@@ -40,25 +40,25 @@ void main(){
     tex1.r = texture2D(u_texture, centeredAspectRatio(uv, u_textureFactor )).r;
     tex2.r = texture2D(u_texture2, centeredAspectRatio(uv, u_textureFactor )).r;
 
-    
+
     uv.x -= sin(uv.y) * ratio / 150. * (vel.x + vel.y) / 7.;
     uv.y -= sin(uv.x) * ratio / 150. * (vel.x + vel.y) / 7.;
 
     tex1.g = texture2D(u_texture, centeredAspectRatio(uv, u_textureFactor )).g;
     tex2.g = texture2D(u_texture2, centeredAspectRatio(uv, u_textureFactor )).g;
-    
+
     uv.x -= sin(uv.y) * ratio / 300. * (vel.x + vel.y) / 7.;
     uv.y -= sin(uv.x) * ratio / 300. * (vel.x + vel.y) / 7.;
 
     tex1.b = texture2D(u_texture, centeredAspectRatio(uv, u_textureFactor )).b;
     tex2.b = texture2D(u_texture2, centeredAspectRatio(uv, u_textureFactor )).b;
-     
-    
+
+
 
 
     vec4 fulltex1 = texture2D(u_texture, centeredAspectRatio(vUv, u_textureFactor) );
     vec4 fulltex2 = texture2D(u_texture2, centeredAspectRatio(vUv, u_texture2Factor));
-    
+
     vec4 mixedTextures =  mix(tex1,tex2,u_textureProgress);
 
     gl_FragColor = mixedTextures;
@@ -83,13 +83,13 @@ void main(){
     float stickOutEffect = normalizedDistance ;
     float stickInEffect = -normalizedDistance ;
 
-    
+
     float stickEffect = mix(stickOutEffect,stickInEffect, u_direction);
 
     // Backwards V wave.
     float stick = 0.5;
-
-    float waveIn = u_progress*(1. / stick); 
+    // マウスダウンした時の画像の縮小の時間を調整している
+    float waveIn = u_progress*(1. / stick);
     float waveOut =  -( u_progress - 1.) * (1./(1.-stick) );
     waveOut = pow(smoothstep(0.,1.,waveOut),0.7);
 
@@ -112,12 +112,12 @@ void main(){
     float stickOffset = u_offset;
     pos.z += stickEffect * stickOffset * stickProgress  - u_offset * offsetProgress;
 
-    
+
     pos.z += sin(distance * 8. - u_time * 2. )  * u_waveIntensity;
 
-    gl_Position =   
-        projectionMatrix * 
-        modelViewMatrix * 
+    gl_Position =
+        projectionMatrix *
+        modelViewMatrix *
          vec4(pos, 1.0);
 
     vUv = uv;
