@@ -73,6 +73,8 @@ class Grab {
       this.scroll.current = position.y;
       this.scroll.delta = this.scroll.current - this.scroll.start;
 
+      console.log(position)
+
       this.onGrabMove({
         delta: this.scroll.delta,
         direction: Math.abs(this.scroll.delta),

@@ -125,12 +125,15 @@ Showcase.prototype.onMouseMove = function (ev) {
   // this.GL.updateRgbEffect({ position, velocity });
 };
 
+// マウス上下でcanvas内の画像切り替えしている
 Showcase.prototype.onGrabMove = function (scroll) {
   this.index.target = clamp(
     this.index.initial + scroll.delta / this.index.scrollSize,
     -this.data.length + 0.51,
     0.49
   );
+
+  console.log('scroll %O', scroll)
 
   const index = clamp(Math.round(-this.index.target), 0, this.data.length - 1);
 
@@ -219,17 +222,24 @@ Showcase.prototype.onGrabStart = function () {
     stiffness: 10,
     damping: 200
   });
+  // popmotionでマウスダウン時に画像が揺れる表現をしている
+  // https://popmotion.io/
+  // parallel（平行）同時に３っつのエフェクトを実行している？
   this.GLStickPop = parallel(
+    //アクションのn次元配列を並列に制御し、配列として出力します。
+    //parallel フレームごとに最大1回出力します。
     progressSpring,
     directionSpring,
     waveIntensitySpring
   ).start({
     update: values => {
       if (this.progress !== values[0]) {}
+      // valuesはprogressSpring,directionSpring,waveIntensitySpringが入った配列
       this.progress = values[0];
       this.direction = values[1];
       this.waveIntensity = values[2];
 
+      // ここでエフェクト（３種類？）
       this.GL.updateStickEffect({
         progress: this.progress,
         direction: this.direction,

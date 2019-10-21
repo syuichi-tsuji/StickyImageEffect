@@ -105,6 +105,10 @@ GLManager.prototype.createPlane = function () {
     segments
   );
   const material = new THREE.ShaderMaterial({
+
+    //three.jsの組み込みuniform/attributeの紹介
+    //https://qiita.com/gam0022/items/1fe17e93f0cd0432a8b0
+
     uniforms: {
       u_texture: {
         type: "t",
@@ -130,12 +134,19 @@ GLManager.prototype.createPlane = function () {
         type: "f",
         value: 8
       },
+      // threejsでGLSLをいじるための基礎知識
+      //https://qiita.com/kitasenjudesign/items/1657d9556591284a43c8
+      //threejsからuniform/attributeを渡すとき指定する文字列(type)
+      //https://qiita.com/kitasenjudesign/items/1657d9556591284a43c8#threejs%E3%81%8B%E3%82%89uniformattribute%E3%82%92%E6%B8%A1%E3%81%99%E3%81%A8%E3%81%8D%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E6%96%87%E5%AD%97%E5%88%97type
+      // threejsでShaderMaterialとかを使うと、自分で直接GLSLをいじれる。
+      // 拡大縮小
       u_progress: {
-        type: "f",
-        value: 0
+        type: "f", //f (float)
+        value: 0 // 初期値？
       },
+      // 不明
       u_direction: {
-        type: "f",
+        type: "f", //f (float)
         value: 1
       },
       u_effect: {
@@ -146,8 +157,9 @@ GLManager.prototype.createPlane = function () {
         type: "f",
         value: this.time
       },
+      // 波の動き
       u_waveIntensity: {
-        type: "f",
+        type: "f", //f (float)
         value: 0
       },
       u_resolution: {
@@ -205,8 +217,12 @@ GLManager.prototype.updateStickEffect = function ({
   direction,
   waveIntensity
 }) {
+  // ここでエフェクト（３種類？）
+  // 画像を縮小拡大させている
   this.mesh.material.uniforms.u_progress.value = progress;
+  // ここは不明
   this.mesh.material.uniforms.u_direction.value = direction;
+  // ゆらゆらさせている
   this.mesh.material.uniforms.u_waveIntensity.value = waveIntensity;
   // this.render();
 };
@@ -268,6 +284,7 @@ GLManager.prototype.scheduleLoop = function () {
   this.loop();
 };
 
+// ここでエフェクトを繰り返して波の動きを表現
 GLManager.prototype.loop = function () {
   this.render();
   this.time += 0.1;
