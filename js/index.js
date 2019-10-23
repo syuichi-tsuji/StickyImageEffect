@@ -1,11 +1,17 @@
 import { Showcase } from "./Showcase";
 import { Slides } from "./Slides";
 import { Cursor } from "./Cursor";
-import image1 from "../images/1.jpg";
-import image2 from "../images/2.jpg";
-import image3 from "../images/3.jpg";
-import image4 from "../images/4.jpg";
-import image5 from "../images/5.jpg";
+// import image1 from "../images/1.jpg";
+// import image2 from "../images/2.jpg";
+// import image3 from "../images/3.jpg";
+// import image4 from "../images/4.jpg";
+// import image5 from "../images/5.jpg";
+
+import image1 from "../images/a1.jpg";
+import image2 from "../images/a2.jpg";
+import image3 from "../images/a3.jpg";
+import image4 from "../images/a4.jpg";
+import image5 from "../images/a5.jpg";
 
 const container = document.getElementById("app");
 const cursor = new Cursor(document.querySelector(".cursor"));
